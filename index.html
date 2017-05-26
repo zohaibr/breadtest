@@ -104,7 +104,7 @@
                     break;
             }
         },
-         customerCSS: "#bread-button,body,html{height:100%;margin:0;width:100%}body{display:table}.bread-btn{border:2px solid #055170;border-radius:8px;background:#fff;font-size:13px;color:red;cursor:pointer}.bread-embed-inner,.bread-label .bread-embed-icon{display:inline-block}.bread-pot:before{content:'Pay Over Time'}.bread-btn .bread-as-low-as:before,.bread-label .bread-as-low-as:before{content:'As low as '}.bread-for:before{content:'For '}"
+      customCSS: "div{display:block}.bread-center{text-align:center;vertical-align:middle;height:100%;width:100%;display:table}.bread-btn{border:2px solid #055170;border-radius:8px;background:#fff;font-size:13px;color:red;cursor:pointer}html,body,.bread-embed{margin:0;padding:0;position:absolute;top:0;right:0;bottom:0;left:0;font-family:sans-serif}.bread-center-inner{display:table-cell;vertical-align:middle}.bread-btn .bread-embed-inner{position:absolute;top:0;left:0;right:50px;bottom:0;padding:0 1em}.bread-btn .bread-embed-icon{position:absolute;top:-1px;right:-51px;bottom:-1px;left:100%;margin-left:-50px;margin-right:50px;background-color:#055170;background-repeat:no-repeat;background-image:url(assets/coin.svg);background-position:center;background-size:auto 30px;border-radius:0 4px 4px 0;cursor:pointer}.bread-pot:before{content:'Pay Over Time'}.bread-btn .bread-as-low-as:before,.bread-label .bread-as-low-as:before{content:'As low as '}.bread-for:before{content:'for '}.bread-dur{text-transform:uppercase}"
     };
 
     bread.checkout(opts);
@@ -148,7 +148,7 @@
                 type: 'Two day shipping'
             }]
     };
-    var options = JSON.stringify(opts)
+    // var options = JSON.stringify(opts)
     // $.ajax({
     //     type: "GET",
     //     url: "http://api.getbread.com/carts",
@@ -163,12 +163,10 @@
     //         alert('Is this working?')
     //     }
     // });
-    bread.cartCreate(opts, function(err, data) {
-        console.log(opts);
-        alert("I am here!")
-    })
+    // bread.cartCreate(opts, function(err, data) {
+    //     console.log(opts);
+    //     alert("I am here!")
+    // })
 </script>
 </body>
 </html>
-
-
