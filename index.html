@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Bread Finance</title>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+  <script src='https://checkout-sandbox.getbread.com/bread.js'
+          data-api-key='7101ea30-8ae3-47ab-a8bd-235860d36f3e'></script>
+</head>
+<body>
+
+<p>Checkout below:</p>
+
+<form id="checkout-form" action="checkout" method="post">
+  <div id='bread-checkout-btn' data-bread-default-size=true></div>
+</form>
+
+<script type='text/javascript'>
+
+    var opts = {
+        buttonId: 'bread-checkout-btn',
+        items: [{
+            name: "Cool Item",
+            price: 10000,
+            sku: "11111",
+            detailUrl: 'some random url',
+            quantity: 1
+        }],
+        billingContact: {
+            fullName: 'John Smith',
+            address: '1000 Charming Lane',
+            zip: '10002',
+            city: 'New York',
+            state: 'NY',
+            phone: '5673420198',
+            email: 'john.smith@yahoo.com'
+        },
+        shippingContact: {
+            fullName: 'John Smith',
+            address: '1000 Charming Lane',
+            zip: '10002',
+            city: 'New York',
+            state: 'NY',
+            phone: '5673420198',
+            email: 'john.smith@yahoo.com'
+        },
+        shippingOptions: [
+            {
+                typeId: 'overnight',
+                cost: 2000,
+                type: 'Overnight shipping'
+            },
+            {
+                typeId: '2-day',
+                cost: 800,
+                type: 'Two day shipping'
+            }],
+        calculateTax: function (shippingContact, callback) {
+            var tax = 0;
+            if (shippingContact.state === "NY") {
+                tax = opts.items.reduce(function (total, item) {
+                            return total + (item.price * item.quantity)
+                        }, 0
+                    ) *
+                    0.05;
+            }
+            callback(null, tax);
+        },
+        actAsLabel: false,
+        asLowAs: true,
+        done: function (err, tx_token) {
+            if (err !== null) {
+                alert(err);
+            } else {
+                alert("Congratulations on your purchase");
+            }
+        },
+        onCustomerClose: function (err, custData) {
+            if (err !== null) {
+                console.error("An error occurred getting customer close data.");
+                return;
+            }
+            var customerEmail = custData.email;
+            var qualState = custData.state;
+            switch (qualState) {
+                case 'PREQUALIFIED':
+                    console.log(customerEmail + " was preapproved for financing.");
+                    break;
+                case 'PARTIALLY_PREQUALIFIED':
+                    console.log(customerEmail + "was partially pre-qualified for financing")
+                    break;
+                case 'NOT_PREQUALIFIED':
+                    console.log(customerEmail + " was declined for financing.");
+                    break;
+                case 'ABANDONED':
+                    if (customerEmail === undefined || customerEmail === null) {
+                        console.log("Unknown customer abandoned their prequalification attempt.");
+                    } else {
+                        console.log(customerEmail + " abandoned their prequalification attempt.");
+                    }
+                    break;
+            }
+        }
+        //  customerCSS: ".bread-text{color: red}"
+        //Based on my understanding, in customCSS I have to pass the entire button CSS rather than only changing
+        //one attribute. In this case I am trying to change the color of the class bread-text.
+        //   customCSS: "html,body,.bread-embed{margin:0;padding:0;position:absolute;top:0;right:0;bottom:0;left:0;font-family:sans-serif}.bread-embed{visibility:hidden}.bread-btn{border:2px solid #055170;border-radius:8px;background:#fff;font-size:13px;color:red;cursor:pointer}.bread-btn .bread-embed-inner{position:absolute;top:0;left:0;right:50px;bottom:0;padding:0 1em}.bread-btn .bread-embed-icon{position:absolute;top:-1px;right:-51px;bottom:-1px;left:100%;margin-left:-50px;margin-right:50px;background-color:#055170;background-repeat:no-repeat;background-image:url(assets/coin.png);background-position:center;background-size:auto 30px;border-radius:0 4px 4px 0;cursor:pointer}.bread-btn .bread-pot:before{content:"/"Pay over time"/";color:red}.bread-dur{text-transform:uppercase}.bread-as-low-as .bread-as-low-as-info{z-index:1000;font-size:1.25em;font-weight:700;padding:3px}.bread-btn.bread-as-low-as .bread-as-low-as:before,.bread-label .bread-as-low-as:before{content:"/"As low as"/";color:#055170;margin-right:.5em}.bread-btn.bread-show-terms .bread-for:before,.bread-label .bread-for:before{content:"/"for"/";color:#000;margin-right:.5em}.bread-btn.bread-show-terms .bread-for:before{color:#055170}.bread-btn.bread-show-terms .bread-pot:before{color:#055170}.bread-center{text-align:center;vertical-align:middle;height:100%;width:100%;display:table}.bread-center-inner{display:table-cell;vertical-align:middle}.bread-label{color:#000;text-align:center}.bread-label .bread-embed-inner{display:inline-block;vertical-align:middle;height:100%}.bread-label .bread-embed-icon{vertical-align:middle;display:inline-block;background:#ef8919;border-radius:100%;width:1.25em;height:1.25em;color:#fff;line-height:1.5em;font-size:.85em;margin-top:-.2em}.bread-label .bread-embed-icon:after{content:"/"i"/"}@media only screen and (-webkit-min-device-pixel-ratio: 2),only screen and (min-device-pixel-ratio: 2),only screen and (min-resolution: 192dpi),only screen and (min-resolution: 2dppx){.bread-btn .bread-embed-icon{background-image:url(assets/coin.svg)}}"
+
+    };
+
+    bread.checkout(opts);
+</script>
+<script>
+    var opts = {
+        items: [{
+            name: "Cool Item",
+            price: 10000,
+            sku: "11111",
+            detailUrl: 'some random url',
+            quantity: 1
+        }],
+        billingContact: {
+            fullName: 'John Smith',
+            address: '1000 Charming Lane',
+            zip: '10002',
+            city: 'New York',
+            state: 'NY',
+            phone: '5673420198',
+            email: 'john.smith@yahoo.com'
+        },
+        shippingContact: {
+            fullName: 'John Smith',
+            address: '1000 Charming Lane',
+            zip: '10002',
+            city: 'New York',
+            state: 'NY',
+            phone: '5673420198',
+            email: 'john.smith@yahoo.com'
+        },
+        shippingOptions: [
+            {
+                typeId: 'overnight',
+                cost: 2000,
+                type: 'Overnight shipping'
+            },
+            {
+                typeId: '2-day',
+                cost: 800,
+                type: 'Two day shipping'
+            }]
+    };
+    var options = JSON.stringify(opts)
+    // $.ajax({
+    //     type: "GET",
+    //     url: "http://api.getbread.com/carts",
+    //     dataType: 'jsonp',
+    //     async: false,
+    //     beforeSend: function (xhr) {
+    //      xhr.setRequestHeader ("Authorization", 'd0dac82c-7d59-4f95-8390-76a60d9f6b8a')
+    //     },
+    //     data: {'expiration': '2017-05-31',
+    //             "options": options},
+    //     success: function() {
+    //         alert('Is this working?')
+    //     }
+    // });
+
+    bread.cartCreate(opts, function(err, data) {
+        console.log(opts);
+        alert("I am here!")
+    })
+</script>
+</body>
+</html>
